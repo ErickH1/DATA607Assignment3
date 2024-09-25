@@ -1,0 +1,2 @@
+"0","(majors_filtered <- majors %>% "
+"0","   filter(str_detect(Major, ""DATA"") | str_detect(Major, ""STATISTICS"")))"

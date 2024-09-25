@@ -1,0 +1,75 @@
+---
+title: "DATA607Assignment3"
+author: "Erick Hadi"
+date: "2024-09-24"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r load-libraries}
+library('tidyverse')
+```
+## Normalization
+
+**1. Provide an example of at least three dataframes in R that demonstrate normalization. The dataframes can contain any data, either real or synthetic. Although normalization is typically done in SQL and relational databases, you are expected to show this example in R, as it is our main work environment in this course.**
+
+```{r normalized-data-frame}
+customers <- data.frame(
+  CustomerID = c(101, 102),
+  CustomerName = c("John Smith", "Jane Doe"),
+  CustomerAddress = c("123 Elm St", "456 Oak St")
+)
+products <- data.frame(
+  ProductName = c("Apples", "Bananas", "Orange"),
+  ProductPrice = c(15.00, 40.00, 10.00)
+)
+
+order_details <- data.frame(
+  OrderID = c("001", "002", "003"),
+  ProductName = c("Apples", "Bananas", "Orange"),
+  Quantity = c(2, 1, 1)
+)
+
+print(customers)
+print(products)
+print(order_details)
+```
+
+## Character Manipulation
+
+**2. Using the 173 majors listed in fivethirtyeight.com’s College Majors dataset [https://fivethirtyeight.com/features/the-economic-guide-to-picking-a-college-major/], provide code that identifies the majors that contain either "DATA" or "STATISTICS"**
+
+```{r get-majors}
+majors <- read_csv('https://raw.githubusercontent.com/fivethirtyeight/data/refs/heads/master/college-majors/majors-list.csv')
+glimpse(majors)
+```
+```{r fliter-majors}
+(majors_filtered <- majors %>% 
+   filter(str_detect(Major, "DATA") | str_detect(Major, "STATISTICS")))
+```
+
+
+
+The two exercises below are taken from R for Data Science, 14.3.5.1 in the on-line version:
+
+**3. Describe, in words, what these expressions will match:**
+
+(.)\1\1 - Matches all words that contain 3 adjacent identical characters (eg. aaa) 
+"(.)(.)\\2\\1" - Matches a pair of character to the same pari but in reverse (eg. abba)
+(..)\1 -  Matches all words that contain two character that repeat (eg. acac)
+"(.).\\1.\\1" - Matches a character followed by any character than the first character repeated then any character then the first character again. (eg. abaca)
+"(.)(.)(.).*\\3\\2\\1" - Matches a sequence of three characters then any set of characters followed by the first sequence in reverse. (eg. abckdjhfcba)
+
+**4. Construct regular expressions to match words that:**
+
+Start and end with the same character.
+(.).*\\1$
+
+Contain a repeated pair of letters (e.g. "church" contains "ch" repeated twice.)
+(..).*\\1
+
+Contain one letter repeated in at least three places (e.g. "eleven" contains three "e"s.)
+([a-z]).*\\1.*\\1.*
+
